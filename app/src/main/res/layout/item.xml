@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/course_text"
+    android:layout_width="wrap_content"
+    android:layout_height="150dp"
+    android:gravity="center"
+    android:textColor="#FF736E6E"
+    android:padding="5dp"
+    android:background="@drawable/course_line"
+    android:textSize="10sp" />

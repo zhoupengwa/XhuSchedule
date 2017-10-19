@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/before"
+        android:checkableBehavior="none" />
+    <!--滑动菜单点击不变色-->
+    <group
+        android:id="@+id/g1"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/set_bg"
+            android:icon="@drawable/ic_nav_bg24dp"
+            android:title="自定义背景" />
+        <item
+            android:id="@+id/bing_bg"
+            android:icon="@drawable/ic_cloud"
+            android:title="使用精美网图" />
+        <item
+            android:id="@+id/origin_bg"
+            android:icon="@drawable/ic_origin_bg"
+            android:title="精简背景" />
+    </group>
+    <group
+        android:id="@+id/g2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/problem_return"
+            android:icon="@drawable/ic_about"
+            android:title="关于" />
+        <item
+            android:id="@+id/change_user"
+            android:icon="@drawable/ic_account"
+            android:title="切换用户" />
+        <item
+            android:id="@+id/end"
+            android:icon="@drawable/ic_exit"
+            android:title="退出" />
+    </group>
+
+</menu>

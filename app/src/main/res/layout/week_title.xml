@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/mon"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周一"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tue"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周二"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/wed"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周三"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/thu"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周四"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/fri"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周五"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/sat"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周六"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/sun"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="周日"
+        android:textColor="#454343"
+        android:textSize="16sp" />
+</LinearLayout>
