@@ -9,10 +9,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-
 import java.io.File;
 import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -86,7 +84,7 @@ public class UpdateCheckUtil {
     }
 
     public void doDownLOad() {
-        final String url = "http://owiijjrb0.bkt.clouddn.com/weily.com.schedule-1.apk";
+        final String url = "http://owiijjrb0.bkt.clouddn.com/%E8%A5%BF%E7%93%9C%E8%AF%BE%E8%A1%A8.apk.apk";
         File file = new File(Environment.getExternalStorageDirectory() + "/Download/西瓜课表.apk");
         if (file.exists()) {
             file.delete();

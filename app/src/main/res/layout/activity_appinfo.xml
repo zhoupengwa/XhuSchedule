@@ -8,6 +8,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="weily.com.schedule.activity.AppInfoActivity">
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="5dp"
+                android:textSize="8sp"
+                android:gravity="center"
+                android:textColor="#000"
+                android:text="作者QQ：982352881（周）、854630101（杰）"/>
+        </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,5 +69,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:text="点击网络提供服务器支持"/>
+
     </LinearLayout>
+
 </FrameLayout>
