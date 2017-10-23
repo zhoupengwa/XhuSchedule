@@ -145,6 +145,6 @@
             android:layout_marginTop="80dp"
             android:gravity="right"
             android:layout_marginRight="40dp"
-            android:text="——退出登录" />
+            android:text="—退出登录" />
     </RelativeLayout>
 </ScrollView>

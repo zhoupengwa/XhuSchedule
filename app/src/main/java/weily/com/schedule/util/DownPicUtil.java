@@ -1,8 +1,6 @@
 package weily.com.schedule.util;
-
 import android.os.AsyncTask;
 import android.os.Environment;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,8 +21,7 @@ public class DownPicUtil {
         if (!file.exists()) {
             file.mkdir();
         }
-        loadPic(file.getPath(), url, downFinishListener);//目录路径，url，下载结果,
-
+        loadPic(file.getPath(), url, downFinishListener);//目录路径，url，下载结果
     }
 
     private static void loadPic(final String filePath, final String url, final DownFinishListener downFinishListener) {

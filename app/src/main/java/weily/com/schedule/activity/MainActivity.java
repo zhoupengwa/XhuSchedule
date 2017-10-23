@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -25,7 +26,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +53,9 @@ import weily.com.schedule.adapter.CourseListAdapter;
 import weily.com.schedule.beans.Course;
 import weily.com.schedule.beans.Student;
 import weily.com.schedule.util.HttpUtil;
+import weily.com.schedule.util.PermissionCheckUtil;
 import weily.com.schedule.util.SpaceItemDecoration;
+import weily.com.schedule.util.UpdateCheckUtil;
 import weily.com.schedule.util.Utility;
 
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView bgImage;
     private ProgressDialog progressDialog;
     private NavigationView navView;
+    private UpdateCheckUtil updateCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initCourseIno();
         //获取背景图
         initBgImage();
+        //检查版更新
+        checkVersion();
+    }
+
+
+    private void checkVersion() {
+        updateCheck = new UpdateCheckUtil(MainActivity.this);
+        updateCheck.checkVsersion();
     }
 
     //检查是否第一次登录
@@ -205,23 +216,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.set_bg:
                 //设置背景
-                switch (checkPhonePermission()) {
-                    case 0:
-                        openAblum();
-                        break;
-                    case 1:
-                        Log.i(TAG, "can  not read and write");
-                        requestPhonePermission(1);
-                        break;
-                    case 2:
-                        Log.i(TAG, "can not write");
-                        requestPhonePermission(2);
-                        break;
-                    case 3:
-                        Log.i(TAG, "can not read");
-                        requestPhonePermission(3);
-                        break;
-                    default:
+                PermissionCheckUtil permissionCheckUtil = new PermissionCheckUtil(MainActivity.this);
+                if ((permissionCheckUtil.checkPhonePermission()) == 0) {
+                    openAblum();
+                } else {
+                    //申请运行时权限
+                    permissionCheckUtil.requestNeedPermission(1);//请求码1代表设置背景申请的权限
                 }
                 break;
             case R.id.bing_bg:
@@ -243,9 +243,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Glide.with(MainActivity.this).load("").into(bgImage);
                 break;
             case R.id.change_user:
-//                SharedPreferences.Editor editor2 = getSharedPreferences("course_data", MODE_PRIVATE).edit();
-//                editor2.putString("courses", "");
-//                editor2.apply();
                 Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent2);
                 finish();
@@ -253,8 +250,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.end:
                 finish();
                 break;
-            case R.id.problem_return:
-                Intent intent3 = new Intent(MainActivity.this, ProblemActivity.class);
+            case R.id.about:
+                Intent intent3 = new Intent(MainActivity.this, AppInfoActivity.class);
                 startActivity(intent3);
                 break;
             default:
@@ -262,41 +259,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
     private void openAblum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 1);
         mDrawerLayout.closeDrawers();
-    }
-
-    //检查运行时权限
-    private int checkPhonePermission() {
-        if ((ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-            return 1;
-        }
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            return 2;//无读 写 权限
-        }
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            return 3;//无法 读 权限
-        }
-        return 0;
-    }
-
-    //申请运行时权限
-    private void requestPhonePermission(int requestPermissionCode) {
-        switch (requestPermissionCode) {
-            case 1://两者都要申请
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                break;
-            case 2://申请写
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                break;
-            case 3://申请读
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                break;
-            default:
-        }
     }
 
     @Override
@@ -306,23 +274,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     openAblum();
                 } else {
-                    Toast.makeText(MainActivity.this, "你拒绝了授权", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "你拒绝了权限", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openAblum();
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    updateCheck.doDownLOad();
                 } else {
-                    Toast.makeText(MainActivity.this, "读取相册被禁止", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "你拒绝了权限", Toast.LENGTH_SHORT).show();
                 }
-                break;
-            case 3:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openAblum();
-                } else {
-                    Toast.makeText(MainActivity.this, "相册被禁止写入", Toast.LENGTH_SHORT).show();
-                }
-                break;
             default:
         }
     }

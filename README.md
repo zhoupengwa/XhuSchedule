@@ -9,6 +9,6 @@ Users could use it to look up to their schedules.
 
 界面精简清晰，可自定义背景，课程与教务系统完全一致。
 
-#版本更新1.1.2
+#版本更新1.1.0
 
 新增了版本自动更新功能

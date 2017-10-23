@@ -14,7 +14,7 @@
         <item
             android:id="@+id/bing_bg"
             android:icon="@drawable/ic_cloud"
-            android:title="使用精美网图" />
+            android:title="每日一图" />
         <item
             android:id="@+id/origin_bg"
             android:icon="@drawable/ic_origin_bg"
@@ -24,7 +24,7 @@
         android:id="@+id/g2"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/problem_return"
+            android:id="@+id/about"
             android:icon="@drawable/ic_about"
             android:title="关于" />
         <item
